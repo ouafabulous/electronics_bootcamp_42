@@ -1,14 +1,15 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define F_CPU 16000000UL
+// #define F_CPU 16000000UL
 #define UART_BAUDRATE 115200
 
 void uart_init() {
   // Configure baud rate
-  uint16_t ubrr = F_CPU / 16 / UART_BAUDRATE - 1;
-  UBRR0H = (uint8_t)(ubrr >> 8);
-  UBRR0L = (uint8_t)ubrr;
+  // uint16_t ubrr = F_CPU / 16 / UART_BAUDRATE - 1;
+  uint16_t ubrr = 8;
+  UBRR0H = ubrr >> 8;
+  UBRR0L = ubrr;
   
   // Enable UART transmitter
   UCSR0B |= (1 << TXEN0);
