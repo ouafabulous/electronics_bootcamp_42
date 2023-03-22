@@ -34,14 +34,24 @@ void wheel(uint8_t pos)
 void init_rgb()
 {
     DDRD |= (1 << LED_R) | (1 << LED_G) | (1 << LED_B);
+
+    // TIMER1
     TCCR0A |= (1 << WGM01) | (1 << WGM00);
-    TCCR0A |= (1 << COM0B1);
+    TCCR0A |= (1 << COM0B1) | (1 << COM0A1);
     TCCR0B |= (1 << CS00);
+
+    // TIMER2
+
+    TCCR2A |= (1 << WGM21) | (1 << WGM20);
+    TCCR2A |= (1 << COM2B1);
+    TCCR2B |=  (1 << CS20);
+
     TCNT0 = 0;
+    TCNT2 = 0;
 
     OCR0A = 0;
     OCR0B = 0;
-   
+    OCR2B = 0;
 
 }
 
@@ -57,9 +67,9 @@ int main(int argc, char const *argv[])
     while (i < 256)
 
     {
-        set_rgb(i, 0, 0);
-        i+=10;
-        _delay_ms(1000);
+        wheel(i);
+        i++;
+        _delay_ms(10);
     }
     }
 
